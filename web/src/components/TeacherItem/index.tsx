@@ -1,43 +1,61 @@
 import React from 'react';
 import './styles.css';
 import Whatsapp from '../../assets/images/icons/whatsapp.svg';
+import api from '../../services/api';
 
-function TeacherItem() {
+export interface Teacher {
+    id: number
+    subject: string,
+    cost: number,
+    name: string,
+    avatar: string,
+    whatsapp: string,
+    bio: string
+
+}
+
+interface TeacherItemProps {
+    teacher: Teacher;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+    function createNewConnection() {
+        api.post('/connections', { user_id: teacher.id }
+        )
+    }
     return (
         <>
             <article className="teacher-item">
                 <header>
-                    <img src="https://avatars2.githubusercontent.com/u/23640249?s=460&u=78a611d3b5c8c8bfd3d5810b2210cd9b8230a7df&v=4" alt="perfil" />
+                    <img src={teacher.avatar} alt={teacher.name} />
                     <div>
                         <strong>
-                            Nome do professor
-                            </strong>
+                            {teacher.name}
+                        </strong>
                         <span>
-                            Materia
-                            </span>
+                            {teacher.subject}
+                        </span>
                     </div>
                 </header>
 
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        <br />  <br />
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                        mollit anim id est laborum.
-                    </p>
+                    {teacher.bio}
+                </p>
 
                 <footer>
                     <p>
                         Preço por hora
-                            <strong>R$ 20,00</strong>
+                        <strong>R$ {teacher.cost}</strong>
                     </p>
-                    <button type="button">
+                    <a
+                        onClick={createNewConnection}
+                        href={`https://wa.me/${teacher.whatsapp}`}
+                        type="button"
+                        target="blank"
+                    >
                         <img src={Whatsapp} alt="icon-whatsapp" />
                             Entrar em contato
-                        </button>
+                    </a>
                 </footer>
             </article>
         </>);
