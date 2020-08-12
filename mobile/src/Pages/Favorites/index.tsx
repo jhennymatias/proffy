@@ -1,18 +1,29 @@
 import React from 'react';
-import { View, ImageBackground, Text } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { View, ScrollView } from 'react-native';
 import PageHeader from '../../components/pageHeader';
 
 import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
+import TeacherItem from '../../components/teacherItem';
 
 
 function Favorite() {
     return (
         <View style={styles.container}>
-            <PageHeader title="Meus Proffys Favoritos"/>
-            <Text>Favorite</Text>
+            <PageHeader title="Meus Proffys Favoritos" />
+            <ScrollView
+                style={styles.teacherList}
+                contentContainerStyle={{
+                    paddingHorizontal: 16,
+                    paddingBottom: 24,
+                }}
+            >
+                <TeacherItem />
+                <TeacherItem />
+                <TeacherItem />
+            </ScrollView>
+
         </View>
+
     )
 }
 
